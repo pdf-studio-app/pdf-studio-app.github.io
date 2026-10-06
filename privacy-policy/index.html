@@ -1,83 +1,255 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PDF Studio Privacy Policy</title>
+<title>Plumleaf PDF Privacy Policy</title>
+<meta name="description" content="How Plumleaf PDF handles your documents and data: files stay on your phone; ads by Google AdMob.">
 <style>
-body { margin:0; font:17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:#fff; color:#1d1d1f; }
-@media (prefers-color-scheme: dark) { body { background:#131316; color:#ececf0; } a { color:#7fb2ff; } }
-main { max-width: 640px; margin: 0 auto; padding: 48px 16px; }
-a { color:#1a5fb4; }
+:root {
+  --bg:#ffffff; --surface:#f7f3f8; --ink:#1d1a20; --muted:#5d5663; --line:#e8e1ec;
+  --plum:#54034C; --plum-soft:#f3e6f1; --link:#6e1464; --chip:#ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#0b0a0d; --surface:#151218; --ink:#ececf0; --muted:#b3aab9; --line:#2a2430;
+    --plum:#D9A7D2; --plum-soft:#2a1527; --link:#D9A7D2; --chip:#1b171f;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#0b0a0d; --surface:#151218; --ink:#ececf0; --muted:#b3aab9; --line:#2a2430;
+  --plum:#D9A7D2; --plum-soft:#2a1527; --link:#D9A7D2; --chip:#1b171f;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+a { color:var(--link); }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar { max-width: 760px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight: 700; color: var(--ink); text-decoration: none; }
+.brand svg { width: 26px; height: 34px; flex: none; }
+.spacer { flex: 1; }
+button.theme { border:1px solid var(--line); background:var(--chip); color:var(--ink); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+nav.toc { max-width: 760px; margin: 0 auto; padding: 0 16px 10px; display:flex; gap:8px; overflow-x:auto; scrollbar-width: none; }
+nav.toc::-webkit-scrollbar { display:none; }
+nav.toc a { flex:none; text-decoration:none; color:var(--muted); border:1px solid var(--line); background:var(--chip); border-radius:999px; padding:5px 12px; font-size:14px; white-space:nowrap; transition: background .2s, color .2s, border-color .2s; }
+nav.toc a.active, nav.toc a:hover { background:var(--plum); border-color:var(--plum); color:var(--bg); }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 96px; }
+h1 { font-size: 32px; line-height: 1.2; margin: 0 0 8px; }
+.meta { color: var(--muted); margin: 0 0 28px; }
+.summary { background: var(--plum-soft); border: 1px solid var(--line); border-radius: 20px; padding: 18px 22px; margin-bottom: 28px; }
+.summary h2 { margin: 0 0 6px; font-size: 19px; color: var(--plum); }
+.summary ul { margin: 0; padding-left: 20px; }
+details { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); margin: 14px 0; scroll-margin-top: 120px; }
+summary { cursor: pointer; list-style: none; padding: 16px 20px; font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 12px; }
+summary::-webkit-details-marker { display: none; }
+summary .num { width: 30px; height: 30px; border-radius: 50%; background: var(--plum); color: var(--bg); display: grid; place-items: center; font-size: 14px; flex: none; }
+summary .chev { margin-left: auto; transition: transform .2s; color: var(--muted); }
+details[open] summary .chev { transform: rotate(180deg); }
+.body { padding: 0 20px 18px 62px; }
+.body p:first-child { margin-top: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 8px 0 12px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+.controls { display:flex; gap: 10px; margin: 0 0 6px; }
+.controls button { border:none; background:none; color:var(--link); font:inherit; font-size:15px; cursor:pointer; padding:0; text-decoration: underline; }
+footer { color: var(--muted); margin-top: 32px; font-size: 15px; }
+#totop { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--plum); color: var(--bg); font-size: 20px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s; }
+#totop.show { opacity: 1; pointer-events: auto; }
+@media (max-width: 520px) { .body { padding-left: 20px; } h1 { font-size: 27px; } }
+@media print { header.top, #totop, .controls { display:none; } details { break-inside: avoid; } }
 </style>
 </head>
 <body>
-<main>
-<h1>PDF Studio Privacy Policy</h1>
-<p>App: PDF Studio (Android, package com.mypdfstudio.app)<br>
-Effective date: 6 October 2026</p>
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Plumleaf PDF privacy policy, top of page">
+      <svg viewBox="18 8 64 84" aria-hidden="true"><path fill="#54034C" fill-rule="evenodd" d="M28 8H57V29Q57 33 61 33H82V82Q82 92 72 92H28Q18 92 18 82V18Q18 8 28 8Z M51.4 77.4L62.5 57C65.6 50.5 61 41 51.4 35.6C50.5 32 48.5 29.5 45.2 27.6L44 29.8C46.4 31.2 47.8 33.2 48.4 36C39 41 34.4 50.5 37.5 57L48.6 77.4L48.6 52Q48.6 50.4 50 50.4Q51.4 50.4 51.4 52Z"/><path fill="#D9A7D2" d="M60 8L82 30H65Q60 30 60 25Z"/></svg>
+      Plumleaf PDF
+    </a>
+    <span class="spacer"></span>
+    <button class="theme" id="theme" type="button" aria-label="Switch between light and dark">Dark</button>
+  </div>
+  <nav class="toc" aria-label="Contents">
+    <a href="#documents">Your documents</a>
+    <a href="#permissions">Permissions</a>
+    <a href="#ads">Advertising</a>
+    <a href="#children">Children</a>
+    <a href="#deleting">Deleting data</a>
+    <a href="#security">Security</a>
+    <a href="#changes">Changes</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
 
-<h2>The short version</h2>
-<ul>
-<li>Your PDFs and scans are processed on your phone. The developer never receives them.</li>
-<li>The developer runs no servers, has no analytics or crash reporting, and has no account system.</li>
-<li>The camera is used only when you scan a document, to create a PDF on your device.</li>
-<li>The app shows ads through Google AdMob, which may collect device information such as the advertising ID to serve and measure ads.</li>
-</ul>
+<main id="top">
+<h1>Privacy Policy</h1>
+<p class="meta">App: Plumleaf PDF (Android, package com.plumleaf.pdf)<br>Effective date: 6 October 2026</p>
 
-<h2>Contents</h2>
-<ol>
-<li><a href="#files">Your documents and app data</a></li>
-<li><a href="#camera">Camera (document scanning)</a></li>
-<li><a href="#ads">Advertising (Google AdMob)</a></li>
-<li><a href="#children">Children</a></li>
-<li><a href="#deleting">Keeping and deleting your data</a></li>
-<li><a href="#security">Security</a></li>
-<li><a href="#changes">Changes to this policy</a></li>
-<li><a href="#contact">Contact</a></li>
-</ol>
+<section class="summary" aria-labelledby="short">
+  <h2 id="short">The short version</h2>
+  <ul>
+    <li>Your PDFs and files are processed on your phone. The developer never receives them.</li>
+    <li>The developer runs no servers, has no analytics or crash reporting, and has no account system.</li>
+    <li>The app does not ask for camera, storage, contacts or location permissions. You choose files yourself with Android's file and photo pickers.</li>
+    <li>The app shows ads through Google AdMob, which may collect device information such as the advertising ID to serve and measure ads.</li>
+  </ul>
+</section>
 
-<h2 id="files">1. Your documents and app data</h2>
-<p>PDF Studio lets you open, edit and export PDF files. You choose which files the app works with, using Android's file picker. Opening, editing, converting and saving all happen on your device.</p>
-<p>The app keeps your settings, and any working copies it needs while you edit, in its private storage on your device.</p>
-<p>The developer runs no servers and never receives your documents. There is no analytics or crash-reporting software in the app, and no PDF Studio account.</p>
+<div class="controls">
+  <button type="button" id="expand">Open all sections</button>
+  <button type="button" id="collapse">Close all sections</button>
+</div>
 
-<h2 id="camera">2. Camera (document scanning)</h2>
-<p><strong>What permission:</strong> CAMERA. The app asks for it only when you start a scan.</p>
-<p><strong>Why:</strong> to photograph paper documents and turn them into PDFs.</p>
-<p><strong>How it works:</strong> images are captured and converted to PDF on your device and saved where you choose. They are never sent to the developer or any third party, and are never used for advertising.</p>
-<p><strong>Turning it off:</strong> revoke the camera permission in Android Settings at any time. Everything except scanning keeps working.</p>
+<details id="documents" open>
+  <summary><span class="num">1</span>Your documents and app data<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>Plumleaf PDF lets you open, edit, convert, organize and protect PDF files. You choose which files the app works with, using Android's file picker or photo picker, or by opening a file in Plumleaf PDF from another app. Opening, editing, converting and saving all happen on your device.</p>
+    <p>While you work on a file, the app keeps a temporary working copy in its private storage on your device. Working copies are deleted when you finish a task and each time the app starts. The app never changes your original file unless you choose "Replace the original" and confirm.</p>
+    <p>Passwords you type to open or protect a PDF are held in memory only for that session. They are never saved or logged.</p>
+    <p>The app also keeps, in its private storage on your device only:</p>
+    <table>
+      <tr><th>What</th><th>Why</th></tr>
+      <tr><td>Your settings</td><td>Remember choices such as appearance</td></tr>
+      <tr><td>Names of recently opened files</td><td>Let you reopen them quickly (you can clear them)</td></tr>
+      <tr><td>Signatures you choose to save</td><td>Sign documents again without redrawing</td></tr>
+      <tr><td>Workflows you create</td><td>Run several tools in a row</td></tr>
+      <tr><td>Which tools you use most</td><td>Suggest them first (you can clear them)</td></tr>
+    </table>
+    <p>The developer runs no servers and never receives your documents or any of this data. There is no analytics or crash-reporting software in the app, and no Plumleaf PDF account.</p>
+  </div>
+</details>
 
-<h2 id="ads">3. Advertising (Google AdMob)</h2>
-<p>The app shows ads through Google AdMob. To serve and measure ads, Google may collect and use your device's advertising ID, IP address, and device and usage information.</p>
-<ul>
-<li>If you are in the EEA, the UK, Switzerland or another region where it applies, you are asked for consent through Google's consent form. You can change your choice later.</li>
-<li>If you are in a US state with a privacy law that applies, you can opt out of the sale or sharing of your data through Google's privacy message.</li>
-<li>Ads are limited to a “PG” (parental guidance) content rating or lower, and dating, gambling, get-rich-quick and sexual ad categories are blocked.</li>
-<li>You can reset your advertising ID, or opt out of personalised ads, in Android Settings.</li>
-</ul>
-<p>Learn more in Google's policy: <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use its services</a>.</p>
+<details id="permissions" open>
+  <summary><span class="num">2</span>Permissions<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>Plumleaf PDF does not request camera, storage, photos and media, contacts, location, microphone, SMS or phone permissions.</p>
+    <ul>
+      <li><strong>Files and photos:</strong> you pick them with Android's system file picker and photo picker, which give the app access only to the items you choose.</li>
+      <li><strong>Taking a photo:</strong> "Take photo" opens your phone's own camera app; Plumleaf PDF receives only the photo you take.</li>
+      <li><strong>Internet:</strong> used only by Google's advertising tools described below. Your documents are never sent over the internet by the app.</li>
+    </ul>
+  </div>
+</details>
 
-<h2 id="children">4. Children</h2>
-<p>PDF Studio is not directed at children under 13, and does not knowingly collect their data.</p>
+<details id="ads" open>
+  <summary><span class="num">3</span>Advertising (Google AdMob)<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>The app shows ads through Google AdMob. To serve and measure ads, and to prevent fraud, Google may collect and use:</p>
+    <table>
+      <tr><th>Data</th><th>Used for</th></tr>
+      <tr><td>Advertising ID and app set ID</td><td>Advertising, analytics, fraud prevention</td></tr>
+      <tr><td>IP address (approximate location)</td><td>Advertising, analytics, fraud prevention</td></tr>
+      <tr><td>Ad views and taps</td><td>Advertising, analytics, fraud prevention</td></tr>
+      <tr><td>Device and ad performance information</td><td>Advertising, analytics, fraud prevention</td></tr>
+    </table>
+    <ul>
+      <li>If you are in the EEA, the UK, Switzerland or another region where it applies, you are asked for consent through Google's consent form. You can change your choice later in the app under Settings &gt; Privacy options.</li>
+      <li>If you are in a US state with a privacy law that applies, you can opt out of the sale or sharing of your data through Google's privacy message.</li>
+      <li>Ads are limited to a "PG" (parental guidance) content rating or lower, and dating, gambling, get-rich-quick and sexual ad categories are blocked.</li>
+      <li>You can reset your advertising ID, or opt out of personalised ads, in Android Settings.</li>
+    </ul>
+    <p>Learn more in Google's policy: <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use its services</a>.</p>
+  </div>
+</details>
 
-<h2 id="deleting">5. Keeping and deleting your data</h2>
-<p>The developer holds no user data, so there is nothing for the developer to delete. You control your data:</p>
-<ul>
-<li>Delete your PDF files to delete the data in them.</li>
-<li>Uninstall the app to delete everything it keeps in its private storage on your device.</li>
-</ul>
+<details id="children" open>
+  <summary><span class="num">4</span>Children<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>Plumleaf PDF is not directed at children under 13, and does not knowingly collect their data.</p>
+  </div>
+</details>
 
-<h2 id="security">6. Security</h2>
-<p>Your documents stay on your device. Network traffic for ads is handled by Google over HTTPS.</p>
+<details id="deleting" open>
+  <summary><span class="num">5</span>Keeping and deleting your data<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>The developer holds no user data, so there is nothing for the developer to delete. You control your data:</p>
+    <ul>
+      <li>Delete your PDF files to delete the data in them.</li>
+      <li>Clear recent files and tool suggestions in the app, and delete saved signatures in the signature list.</li>
+      <li>Uninstall the app to delete everything it keeps in its private storage on your device.</li>
+    </ul>
+  </div>
+</details>
 
-<h2 id="changes">7. Changes to this policy</h2>
-<p>This policy may be updated. When it is, the effective date at the top will change and the new version will be posted at this same address.</p>
+<details id="security" open>
+  <summary><span class="num">6</span>Security<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>Your documents stay on your device, in the app's private storage that other apps cannot read. Network traffic for ads is handled by Google over HTTPS.</p>
+  </div>
+</details>
 
-<h2 id="contact">8. Contact</h2>
-<p>Questions about this policy or your privacy? Email the app developer at <a href="mailto:my.family.finance.app@gmail.com">my.family.finance.app@gmail.com</a>.</p>
+<details id="changes" open>
+  <summary><span class="num">7</span>Changes to this policy<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>This policy may be updated. When it is, the effective date at the top will change and the new version will be posted at this same address.</p>
+  </div>
+</details>
 
-<p>© 2026 PDF Studio</p>
+<details id="contact" open>
+  <summary><span class="num">8</span>Contact<span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>Questions about this policy or your privacy? Email the app developer at <a href="mailto:my.family.finance.app@gmail.com">my.family.finance.app@gmail.com</a>.</p>
+  </div>
+</details>
+
+<footer>&copy; 2026 Plumleaf PDF</footer>
 </main>
+
+<button id="totop" type="button" aria-label="Back to top">&#8593;</button>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('theme');
+  function stored() { try { return localStorage.getItem('pl-theme'); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem('pl-theme', v); } catch (e) {} }
+  function isDark() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function label() { themeBtn.textContent = isDark() ? 'Light' : 'Dark'; }
+  var s = stored(); if (s) root.setAttribute('data-theme', s);
+  label();
+  themeBtn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next); save(next); label();
+  });
+
+  // Opening a section from the contents bar or a link always shows it.
+  function openTarget() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === 'DETAILS') el.open = true;
+  }
+  window.addEventListener('hashchange', openTarget);
+  openTarget();
+
+  var all = Array.prototype.slice.call(document.querySelectorAll('details'));
+  document.getElementById('expand').addEventListener('click', function () { all.forEach(function (d) { d.open = true; }); });
+  document.getElementById('collapse').addEventListener('click', function () { all.forEach(function (d) { d.open = false; }); });
+
+  // Highlight the section being read in the contents bar.
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) {
+          var on = a.getAttribute('href') === '#' + e.target.id;
+          a.classList.toggle('active', on);
+          if (on && a.scrollIntoView) a.scrollIntoView({ block: 'nearest', inline: 'center' });
+        });
+      });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    all.forEach(function (d) { io.observe(d); });
+  }
+
+  var top = document.getElementById('totop');
+  window.addEventListener('scroll', function () { top.classList.toggle('show', window.scrollY > 600); }, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0 }); });
+})();
+</script>
 </body>
 </html>
