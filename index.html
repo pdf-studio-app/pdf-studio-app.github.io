@@ -1,27 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PDF Studio</title>
+<title>Plumleaf PDF: Edit, sign and convert PDFs on your phone</title>
+<meta name="description" content="Plumleaf PDF is a PDF toolkit for Android. Edit, sign, merge, compress and convert PDFs. Your files stay on your phone.">
 <style>
-body { margin:0; font:17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:#fff; color:#1d1d1f; }
-@media (prefers-color-scheme: dark) { body { background:#131316; color:#ececf0; } a { color:#7fb2ff; } }
-main { max-width: 640px; margin: 0 auto; padding: 48px 16px; }
-a { color:#1a5fb4; }
+:root {
+  --bg:#ffffff; --surface:#f7f3f8; --ink:#1d1a20; --muted:#5d5663; --line:#e8e1ec;
+  --plum:#54034C; --plum-soft:#f3e6f1; --link:#6e1464; --chip:#ffffff; --mark:#54034C; --mark-flap:#D9A7D2; --on-plum:#ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#0b0a0d; --surface:#151218; --ink:#ececf0; --muted:#b3aab9; --line:#2a2430;
+    --plum:#D9A7D2; --plum-soft:#2a1527; --link:#D9A7D2; --chip:#1b171f; --mark:#D9A7D2; --mark-flap:#FFFFFF; --on-plum:#1d0a1a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#0b0a0d; --surface:#151218; --ink:#ececf0; --muted:#b3aab9; --line:#2a2430;
+  --plum:#D9A7D2; --plum-soft:#2a1527; --link:#D9A7D2; --chip:#1b171f; --mark:#D9A7D2; --mark-flap:#FFFFFF; --on-plum:#1d0a1a;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+a { color:var(--link); }
+header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar { max-width: 880px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight: 700; color: var(--ink); text-decoration: none; }
+.brand svg { width: 26px; height: 34px; flex: none; }
+.mark { fill: var(--mark); } .flap { fill: var(--mark-flap); }
+.spacer { flex: 1; }
+.bar nav a { color: var(--muted); text-decoration: none; font-size: 15px; margin-left: 14px; }
+.bar nav a:hover { color: var(--ink); }
+button.theme { border:1px solid var(--line); background:var(--chip); color:var(--ink); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+main { max-width: 880px; margin: 0 auto; padding: 0 16px 80px; }
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 56px 0 40px; }
+.hero .icon { width: 120px; height: 120px; border-radius: 28px; background: #54034C; display: grid; place-items: center; }
+.hero .icon svg { width: 60px; height: 78px; }
+.hero h1 { font-size: 40px; line-height: 1.15; margin: 0 0 10px; }
+.hero p { color: var(--muted); margin: 0 0 18px; font-size: 19px; }
+.cta { display: inline-block; background: var(--plum); color: var(--on-plum); text-decoration: none; font-weight: 700; padding: 12px 22px; border-radius: 999px; }
+.cta + .note { display: block; color: var(--muted); font-size: 14px; margin-top: 8px; }
+.promise { background: var(--plum-soft); border: 1px solid var(--line); border-radius: 22px; padding: 20px 24px; margin: 8px 0 36px; }
+.promise h2 { margin: 0 0 8px; font-size: 20px; color: var(--plum); }
+.promise ul { margin: 0; padding-left: 20px; }
+h2.section { font-size: 24px; margin: 36px 0 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px; transition: transform .15s, border-color .15s; }
+.card:hover { transform: translateY(-2px); border-color: var(--plum); }
+.card h3 { margin: 0 0 6px; font-size: 18px; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+details { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); margin: 10px 0; }
+summary { cursor: pointer; padding: 14px 18px; font-weight: 700; list-style: none; display:flex; align-items:center; }
+summary::-webkit-details-marker { display: none; }
+summary .chev { margin-left: auto; color: var(--muted); transition: transform .2s; }
+details[open] summary .chev { transform: rotate(180deg); }
+details .body { padding: 0 18px 16px; color: var(--ink); }
+footer { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 20px; color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+@media (max-width: 560px) {
+  .hero { grid-template-columns: 1fr; text-align: left; padding-top: 32px; }
+  .hero .icon { width: 88px; height: 88px; border-radius: 22px; }
+  .hero .icon svg { width: 44px; height: 57px; }
+  .hero h1 { font-size: 31px; }
+  .bar nav { display: none; }
+}
 </style>
 </head>
 <body>
-<main>
-<h1>PDF Studio</h1>
-<p>A PDF app for Android: open, edit and export PDFs, and scan paper documents into PDFs with your camera.</p>
-<ul>
-<li>Your documents are processed on your phone and never uploaded to the developer.</li>
-<li>Scan documents to PDF with the camera. Photos are used only to create your PDF.</li>
-<li>No PDF Studio account and no servers: the developer never sees your files.</li>
-</ul>
-<p><a href="privacy-policy/">Privacy policy</a></p>
-<p>Contact: <a href="mailto:my.family.finance.app@gmail.com">my.family.finance.app@gmail.com</a></p>
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Plumleaf PDF home">
+      <svg viewBox="18 8 64 84" aria-hidden="true"><path class="mark" fill-rule="evenodd" d="M28 8H57V29Q57 33 61 33H82V82Q82 92 72 92H28Q18 92 18 82V18Q18 8 28 8Z M51.4 77.4L62.5 57C65.6 50.5 61 41 51.4 35.6C50.5 32 48.5 29.5 45.2 27.6L44 29.8C46.4 31.2 47.8 33.2 48.4 36C39 41 34.4 50.5 37.5 57L48.6 77.4L48.6 52Q48.6 50.4 50 50.4Q51.4 50.4 51.4 52Z"/><path class="flap" d="M60 8L82 30H65Q60 30 60 25Z"/></svg>
+      Plumleaf PDF
+    </a>
+    <span class="spacer"></span>
+    <nav aria-label="Site">
+      <a href="#features">Features</a>
+      <a href="#faq">Questions</a>
+      <a href="privacy-policy/">Privacy</a>
+    </nav>
+    <button class="theme" id="theme" type="button" aria-label="Switch between light and dark">Dark</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="icon" aria-hidden="true">
+      <svg viewBox="18 8 64 84"><path fill="#FFFFFF" fill-rule="evenodd" d="M28 8H57V29Q57 33 61 33H82V82Q82 92 72 92H28Q18 92 18 82V18Q18 8 28 8Z M51.4 77.4L62.5 57C65.6 50.5 61 41 51.4 35.6C50.5 32 48.5 29.5 45.2 27.6L44 29.8C46.4 31.2 47.8 33.2 48.4 36C39 41 34.4 50.5 37.5 57L48.6 77.4L48.6 52Q48.6 50.4 50 50.4Q51.4 50.4 51.4 52Z"/><path fill="#D9A7D2" d="M60 8L82 30H65Q60 30 60 25Z"/></svg>
+    </div>
+    <div>
+      <h1>Plumleaf PDF</h1>
+      <p>Edit, sign, merge, compress and convert PDFs on your Android phone. Your files stay on your phone.</p>
+      <a class="cta" href="https://play.google.com/store/apps/details?id=com.plumleaf.pdf">Get it on Google Play</a>
+      <span class="note">Free, supported by ads. No account needed.</span>
+    </div>
+  </section>
+
+  <section class="promise" aria-labelledby="promise">
+    <h2 id="promise">Private by design</h2>
+    <ul>
+      <li>Your documents are processed on your phone and never uploaded to the developer.</li>
+      <li>No account, no servers, no analytics: the developer never sees your files.</li>
+      <li>No camera, storage, contacts or location permission. You choose files yourself with Android's file and photo pickers.</li>
+    </ul>
+  </section>
+
+  <h2 class="section" id="features">What you can do</h2>
+  <div class="grid">
+    <div class="card"><h3>Edit and sign</h3><p>Add text, images, dates and your signature. Fill in forms or add your own fillable fields.</p></div>
+    <div class="card"><h3>Organize pages</h3><p>Merge, split, extract, remove, reorder and rotate pages, or add blank ones.</p></div>
+    <div class="card"><h3>Convert</h3><p>Photos, DOCX, XLSX, PPTX and HTML to PDF. PDF to JPG, DOCX, XLSX, PPTX, Markdown and PDF/A.</p></div>
+    <div class="card"><h3>Compress</h3><p>Make PDFs smaller to share them faster, keeping text sharp.</p></div>
+    <div class="card"><h3>Protect</h3><p>Add a password, remove one you know, or redact text, emails and phone numbers for good.</p></div>
+    <div class="card"><h3>More tools</h3><p>Watermarks, page numbers, crop, compare two versions, repair damaged files, summarize and workflows.</p></div>
+  </div>
+
+  <h2 class="section" id="faq">Questions</h2>
+  <details>
+    <summary>Are my files uploaded anywhere?<span class="chev" aria-hidden="true">&#9662;</span></summary>
+    <div class="body">No. Every tool runs on your phone. The developer has no servers and never receives your documents. See the <a href="privacy-policy/">privacy policy</a>.</div>
+  </details>
+  <details>
+    <summary>Why does the app use the internet?<span class="chev" aria-hidden="true">&#9662;</span></summary>
+    <div class="body">Only to show ads from Google AdMob, which keep the app free. Your documents are never sent over the internet by the app.</div>
+  </details>
+  <details>
+    <summary>Do I need an account?<span class="chev" aria-hidden="true">&#9662;</span></summary>
+    <div class="body">No. There is no sign-in and nothing to register.</div>
+  </details>
+  <details>
+    <summary>Can I open PDFs from other apps?<span class="chev" aria-hidden="true">&#9662;</span></summary>
+    <div class="body">Yes. Choose Plumleaf PDF under "Open with" or "Share" in your file manager, email or messaging app, then pick what you want to do with the file.</div>
+  </details>
+
+  <footer>
+    <span>&copy; 2026 Plumleaf PDF</span>
+    <a href="privacy-policy/">Privacy policy</a>
+    <a href="mailto:my.family.finance.app@gmail.com">my.family.finance.app@gmail.com</a>
+  </footer>
 </main>
+
+<script>
+(function () {
+  var root = document.documentElement, btn = document.getElementById('theme');
+  function stored() { try { return localStorage.getItem('pl-theme'); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem('pl-theme', v); } catch (e) {} }
+  function isDark() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function label() { btn.textContent = isDark() ? 'Light' : 'Dark'; }
+  var s = stored(); if (s) root.setAttribute('data-theme', s);
+  label();
+  btn.addEventListener('click', function () { var n = isDark() ? 'light' : 'dark'; root.setAttribute('data-theme', n); save(n); label(); });
+})();
+</script>
 </body>
 </html>
